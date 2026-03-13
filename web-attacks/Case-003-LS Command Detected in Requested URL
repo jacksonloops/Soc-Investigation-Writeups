@@ -1,1 +1,33 @@
+Incident: LS Command Detected in Requested URL
 
+Indicators:
+  Alert Trigger Reason : URL Contains LS 
+  Source IP: 172.16.17.46
+  Source port: 46843
+  Destination IP: 188.114.96.15
+  Destination Port: 443
+  Protocol: HTTPS
+
+Investigation:
+Understanding why alert was triggered:
+  URL Contains LS
+
+Traffic information:
+SOURCE:
+  After researching ip address the IP address is actually owned by an endpoint in the company. 
+
+DESTINATION:
+  After researching the ip address, when searching the endpoints on the SIEM, the same system from the source domain pops up. And putting it into ARIN Whois/RDAP we see it's a cloud flare server.
+
+PROTOCOL
+  The protocol being used: HTTPS
+
+Findings:
+  After analyzing the request: https://letsdefend.io/blog/?s=skills, we see this isnt an LS command, and a false positive was triggered. This was a user on the company network searching for something on a server webpage, nothing else.
+
+Just to make sure we analyze the other traffic from this domain, and nothing is malicous. 
+Conclusion:
+False positive.
+
+Response:
+No escalation required.
