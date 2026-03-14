@@ -1,1 +1,25 @@
+Incident:  Phishing Mail Detected - Internal to Internal
 
+Parse Email:
+Source Email: aaronluo@cmail.carleton.ca
+Destination Email: mark@letsdefend.io
+SMTP Address: 189.162.189.159
+Date: Mar, 21, 2021, 12:26 PM
+Attachment: Yes
+Is the mail content suspicous: Yes
+
+Investigation:
+  Analyzing attachement:
+    After putting the file into VirusTotal this file is almost certaintly a malware or virus of some sort. Almost half of the security vendors flagged this file.
+
+  Delivered (Yes/No):
+    No, looking at the SIEM alert the email was blocked.
+Findings:
+  After investigating emails from source and destination emails, someone attempted to send a malicous attachment to person in the company.
+  However since the email was blocked, nothing happened on the recievers system.
+
+Conclusion:
+True positive alert.
+
+Response:
+No escalation required.
