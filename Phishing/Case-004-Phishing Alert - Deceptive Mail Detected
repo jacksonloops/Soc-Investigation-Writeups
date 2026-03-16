@@ -1,1 +1,58 @@
+Information:
+  Event Time: May, 13, 2024, 09:22 AM
+  Severity: Medium
+  Rule: Phishing Alert - Deceptive Mail Detected
 
+Executive summary — 2-4 sentences max. What fired, what you found, and what you did about it. Written so a non-technical manager can read it and understand the outcome without reading the rest.
+
+Alert details:
+  Rule Triggered: SOC282 - Phishing Alert - Deceptive Mail Detected
+  Log Source: Email Security
+  Source Adress: free@coffeeshooop.com
+  Destination Address: Felix@letsdefend.io
+  SMTP Address: 103.80.134.63
+  Attachments: free-coffee.zip
+  Status: Closed
+
+Investigation timeline:
+  [2026-03-15 5:59 UTC] Alert triggered — Phishing Alert - Deceptive Mail Detected fired on Felix@letsdefend.io's email inbox
+  [2026-03-15 6:01 UTC] Ran URL through VirusTotal, flagged heavily by security vendors.
+  [2026-03-15 6:02 UTC] Check if it was recieved by the intended recipient, it was.
+  [2026-03-15 6:03 UTC] Delete it from recipients email inbox.
+  [2026-03-15 6:07 UTC] Checked recipients endpoint system to see what OS they are running so I can use proper VM to analyze attachment to get C2 address.
+  [2026-03-15 6:10 UTC] While looking at recipients endpoint system I see they visited the malicous URL inside the email, they may have downloaded the malware.
+  [2026-03-15 6:20 UTC] Also while looking at recipients endpoint system I see they visited C2 Address
+  [2026-03-15 6:21 UTC] Contain the recipients system.
+  [2026-03-15 6:25 UTC] Filtering to see if any other users visit the C2 they did not. So our recipient was the only   system infected on the network.
+
+Findings:
+  An user on the company netowrk was sent a malicous phishing email. They opened it and clicked the malicous URL which downloaded malware onto their system. 
+
+MITRE ATT&CK mapping:
+  T1566.001, Phishing: Spearphishing AttachmentMalicious ZIP delivered via email
+  T1204.002, User Execution: Malicious FileRecipient clicked URL and likely executed payload
+  T1071.001, Application Layer Protocol: Web ProtocolsOutbound HTTP/S communication to C2
+  T1105, Ingress Tool TransferMalware downloaded via malicious URL
+
+Verdict:
+  True Positive 
+
+Response actions taken:
+  Malicious email deleted from recipient inbox
+  Affected endpoint isolated and contained via EDR
+  Network-wide sweep performed for C2 indicator — no additional hosts identified
+  Ticket escalated to Tier 2 / IR team for full remediation
+  
+Recommendations:
+
+   * Could consider banning connections to C2 address, doesnt seem to be affilicated with any large telecommuniation / cloud service and has been used for abuse consistently. 
+   * Add hash to process blacklist.
+  * Block mail from SMTP Address.
+  * Block sender domain.
+  * Flag recipient to remind them of phishing and malware attacks.
+References:
+
+  VirusTotal analysis — embedded URL and sender domain
+  EDR endpoint telemetry — Felix's workstation
+  Firewall logs — outbound C2 connection
+  MITRE ATT&CK: T1566.001, T1204.002, T1071.001, T1105
