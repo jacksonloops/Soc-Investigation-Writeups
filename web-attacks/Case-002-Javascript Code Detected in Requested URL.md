@@ -6,7 +6,7 @@
 
 | Field | Detail |
 |---|---|
-| Event Time | \[From SIEM alert\] |
+| Event Time | (See Investigation Timeline) |
 | Severity | Medium |
 | Rule | JavaScript Code Detected in Requested URL |
 
